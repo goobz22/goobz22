@@ -1,135 +1,119 @@
 # Matthew Goluba
 
-**I'm building a business platform that builds itself — solo, self-funded, on an AI agent fleet I engineered myself. This page is the war plan, and the receipts.**
-
-I'm a network engineer by trade — L3 at Broadcom (VMware VCF), NSX/HCX, permanent seat on the P1 critical-outage team. Everything I know is self-taught. Before AI existed I stayed up all night learning bash, Linux, and routing protocols because a wireless ISP had to work in the morning, and I programmed microwave radios in production. I love RF. I love this field. In 2023 I took a year off and went into debt paying an engineer $50/hour to teach me to write software the same way. This year, the career that apprenticeship earned me paid off the debt that funded it — the bet closed its own loop. Now I'm ramping.
+Software engineer and network engineer. I am building **[ThothOS](https://thothos.net)** — business software that builds itself to fit the customer — solo and self-funded, on AI agent infrastructure of my own design.
 
 📫 **mkgoluba@outlook.com**
 
 ---
 
-## The war chest
+## Background
 
-I don't have seed funding. I have a paycheck and arithmetic.
+I am an L3 Technical Support Engineer at Broadcom (VMware Cloud Foundation Global Support) — NSX, HCX, Aria Operations, vCenter, ESXi — a member of the P1 critical-outage team and one of two engineers on the organization's technical support coding team. Before Broadcom I was a Network Virtualization Engineer at VMware, and before that I designed and operated ISP and MSP infrastructure: a wireless ISP serving 800+ subscribers over a redundant 11 GHz OSPF backhaul loop, an LTE deployment on 3.65 GHz, FCC license filings, a regional fiber backbone upgrade from 100 Mbps to 1 Gbps, and the on-premise migration of 100+ hosting customers.
 
-| What I pay for | Roughly |
+I hold a B.S. in Information Technology, but the working skill set is self-taught — Linux, bash, and routing protocols learned during the ISP years because production networks required it. In 2023–24 I took a deliberate career break and hired a professional engineer at $50/hour for one-on-one instruction in software engineering, funded entirely out of my own pocket. Everything below is the result.
+
+---
+
+## AI usage, at scale
+
+I operate a fleet of maxed-out AI subscriptions rather than a metered API budget:
+
+| Subscription | Monthly cost |
 |---|---|
-| 4× Claude Max 20x ($200/mo each) | $800/mo |
-| 1× Claude Max 5x | $100/mo |
-| Cursor Pro+ and Cursor Pro | $80/mo |
-| **Total subscriptions** | **~$1,000/mo** |
+| 4× Claude Max 20x | $800 |
+| 1× Claude Max 5x | $100 |
+| Cursor Pro+ and Cursor Pro | $80 |
+| **Total** | **~$1,000** |
 
-Every one of those accounts is pinned at its daily, weekly, **and** total limits, every cycle. Last week it was five Max 20x accounts; by September it'll be five to seven. Run the math on what that usage would cost metered and it's **$40–50k/month of inference, low-side estimate — roughly a trillion tokens over the last six months** — driven for about a thousand dollars.
+Every account runs at its daily, weekly, and total limits each cycle. A Max 20x account driven to its limits works out to **$2,000–3,000 per week** in metered-equivalent usage; four of them plus the Max 5x is **$8,500–12,750 per week — $40–50k per month on the conservative end, roughly one trillion tokens over the past six months** — for about $1,000 in subscriptions. The fleet was five Max 20x accounts until recently and scales to five to seven in September, which puts the metered-equivalent ceiling near $90k per month. This is not token maxxing; it is pushing AI to the edge of what is possible without seed funding.
 
-This isn't token maxxing. **This is pushing AI to the edge of what is possible without seed funding.**
-
-And it shows up in the git history: **10,578 commits to ThothOS in 2026 alone** (15,868 total since 2023) — I have shipped more code this year than every previous year of my life combined. Across active projects I write and maintain roughly **two million lines of code**: ~1.5M TypeScript, ~215K C++/CUDA, ~200K Google Apps Script (app + tests), ~36K Go.
+The output is measurable: **10,578 commits to ThothOS in 2026 alone** (15,868 total since 2023) — more code shipped this year than in all prior years combined — across roughly **two million lines of maintained code**: ~1.5M TypeScript, ~215K C++/CUDA, ~200K Google Apps Script (application and tests), ~36K Go.
 
 ---
 
-## The objective: ThothOS → [thothos.net](https://thothos.net)
+## ThothOS — [thothos.net](https://thothos.net)
 
-**Business software that builds itself to fit you.**
+**Business software that builds itself to fit you.** The published roadmap is three phases: build a complete business platform; teach it to build itself; launch it publicly. The first two phases are delivered and live; the public launch is in progress for 2026.
 
-The plan, verbatim from the [Master Plan](https://thothos.net/website/master-plan): *build a complete business platform; teach it to build itself; then launch it to the world.* Phases one and two are delivered and live. Phase three — public launch — is in progress, 2026.
+Current state, built solo:
 
-What exists today, solo-built:
+- **~1.1 million lines of TypeScript across 23 integrated workspaces** — invoicing, contracts with e-signature, scheduling, inventory, point-of-sale on Stripe Terminal, email marketing, learning management, IPAM/network administration, and customer and employee portals over one shared data layer.
+- **218 entity models declared once, with everything derived.** Each domain object is a single manifest; code generation emits the Mongoose model, GraphQL resolvers and routes, cached server readers, TanStack Query hooks, and Zod validation. The model, API, types, and forms cannot structurally drift.
+- **First-party authentication** — passwordless email/SMS/TOTP, 384-bit session tokens SHA-256-hashed at rest, OIDC and SAML 2.0 SSO with SCIM provisioning. No Auth0, Clerk, or NextAuth.
+- **The homepage demo is the production builder.** An anonymous visitor's build request runs the real builder tools against a disposable sandbox, constrained by a 21-tool allowlist verified per-tool by write target, a denylist covering everything that publishes, writes records, moves money, or reaches the network, and a build-time check that the two sets never intersect.
+- **AI-built workspaces are identical to hand-built ones, and a machine verifies it.** The builder writes configuration that activates the same canonical routes, components, and server data paths as the shipped product — not generated lookalikes. A parity harness compares the chat-built company, employee, and customer experience against the hand-built reference: **105 parity cells, green, deterministic across consecutive full sweeps.**
+- **The agent operates the business as well as building it** — roughly 66 tool modules spanning accounting, contracts, POS, shipping, network administration, loyalty, inventory forecasting, and scheduling.
 
-- **~1.1 million lines of TypeScript. 23 integrated workspaces. One conversation to assemble them.** Invoicing, contracts with e-signature, scheduling, inventory, point-of-sale on Stripe Terminal, email marketing, learning management, IPAM/network administration, customer and employee portals — one shared data layer, nothing glued together.
-- **218 entity models declared once, everything derived.** Each domain object is a single manifest; codegen emits the Mongoose model, the GraphQL resolvers and routes, the cached server readers, the TanStack Query hooks, and the Zod form validation. The model, API, types, and forms structurally cannot drift.
-- **Custom auth, no Auth0/Clerk/NextAuth**: passwordless email/SMS/TOTP, 384-bit tokens SHA-256-hashed at rest, first-party OIDC and SAML 2.0 SSO with SCIM provisioning.
-- **The homepage try-it is the real builder.** Type "I run a dog grooming business" or paste your website's URL and the same agent loop that powers the in-app builder assembles a working preview. It runs the real builder tools against a disposable sandbox: a 21-tool allowlist where every entry is code-verified by its *write target* (tool names lie — a draft-sounding tool that writes published state is denied), a denylist of everything that publishes, writes records, touches money, or reaches the network, and a build-time check that the two sets can never intersect.
-- **Chat-built means identical, and a machine proves it.** When the AI activates a workspace, it doesn't generate a lookalike — it writes configuration that switches on the same canonical route, the same components, the same server data path as the hand-built product. A parity harness drives the builder against a fresh tenant and machine-compares the resulting company, employee, and customer experience against the hand-built reference: **105 parity cells, green, deterministic across consecutive full sweeps.** One sentence like "I need a permit tracker" produces staff CRUD, a customer self-view, and an employee view over the *same* records, every request re-checking tenant and audience.
-- **The AI already operates the business, not just the builder.** The agent tool surface spans accounting, contracts, POS, shipping labels, network administration, loyalty, gift cards, inventory forecasting, scheduling, webhooks — ~66 tool modules, with the core builder module alone at 11,362 lines.
-
-Here's the part that matters strategically: **the platform is built to meet AI where it is, with the dials exposed.** Model selection lives in one config file. The LLM transport is swappable. AI usage is metered and billed per tier. The sandbox allowlist is a policy object. Today those knobs are set where current inference costs make sense. Every time the cost curve drops, I turn them up — and the endgame is a full AI-builder platform whose capabilities expand on a price curve I don't control but have already designed for. I'm not waiting for the future to build for it; the mountain is already mapped.
+The architecture is deliberately built ahead of current AI economics. Model selection is centralized in one configuration file, the LLM transport is swappable, AI usage is metered and billed per tier, and capability boundaries are policy objects. Those dials are set where today's inference costs make sense; as costs fall, they turn up. The end state — a full AI-builder platform — is designed and wired now, and expands on a price curve rather than a rewrite.
 
 ---
 
-## The proving ground: [cat-annihilation](https://github.com/goobz22/cat-annihilation)
+## cat-annihilation — [github.com/goobz22/cat-annihilation](https://github.com/goobz22/cat-annihilation)
 
-I wrote a wave-survival game in Three.js/React Three Fiber — one cat versus escalating hordes of dogs. Finished it, shipped it. Then I decided the only honest way to understand what happens between a draw call and a pixel was to build the entire engine underneath it myself.
+I built a complete wave-survival game in Three.js/React Three Fiber, then undertook converting it to a **from-scratch C++20 / Vulkan / CUDA engine** — no Unity, Unreal, or third-party renderer — to understand the full path from draw call to pixel. The web build serves as the specification: every gameplay constant in the native engine is cited to the exact web source line, and rendered output is pixel-compared against the running web game.
 
-So I'm converting my own finished Three.js game into a **from-scratch C++20 / Vulkan / CUDA engine**. No Unity, no Unreal, no bgfx. The browser build is the spec; the native engine is the implementation under test — every gameplay constant is cited to the exact web source line, and the rendered output is pixel-matched against the running web game (the ground color is within one unit of green).
+The engine includes: a render graph with per-resource barrier insertion (topological pass sorting, transient resource lifetimes); clustered deferred PBR with a 16×9×24 compute-assigned light grid; cascaded shadow maps with a Guillotine-packed atlas whose pack density is asserted by unit test; CUDA rigid-body physics (spatial-hash broadphase, GJK/EPA narrow phase) beyond 10,000 bodies; a million-particle CUDA simulation with full stream compaction; a custom ECS on C++20 concepts; a work-stealing job scheduler; SIMD math; custom allocators with zero dynamic allocation in the render loop; and GPU profiling via Vulkan timestamp queries.
 
-What "from scratch" means here:
-
-- A render graph with real per-resource barrier insertion (Kahn topological sort, transient lifetimes, GraphViz export of the frame)
-- Clustered deferred PBR — 16×9×24 light clusters assigned in a compute shader, hand-written Cook-Torrance BRDF
-- Cascaded shadow maps with a Guillotine-packed shadow atlas whose ≥80% pack density is asserted by a unit test
-- CUDA rigid-body physics (spatial-hash broadphase, GJK/EPA narrow phase) scaling past 10,000 bodies, plus a million-particle CUDA sim with full stream compaction
-- Custom ECS on C++20 concepts, work-stealing job scheduler, SSE4.1 SIMD math, custom allocators — zero dynamic allocation in the render loop
-- Real GPU timing via Vulkan timestamp queries — not CPU timing pretending to be GPU
-
-**452 C++/CUDA source files. 7.7 million test assertions across 1,200+ cases, deterministic and replayable.** The forest has 18,931 individually simulated tree colliders, because I told the agent to "really hone in" and that directive is now a load-bearing code comment. The audio engine is fully built and disabled by default, because a mid-render crash used to leave a buffer screaming through the speakers. There is a Claude subagent in the repo called the *TODO Annihilation Commander*, and the codebase contains zero TODOs.
+**452 C++/CUDA source files; 7.7 million test assertions across 1,200+ deterministic, replayable cases**, with a fully headless test harness that drives the engine through scripted input and screen-state assertions.
 
 ---
 
-## The day job: Broadcom
+## Work at Broadcom
 
-L3 Technical Support Engineer, VCF Global Support — NSX, HCX, Aria Operations, vCenter, ESXi. P1 critical-outage team. One of two engineers on the org's technical-support coding team. The day job funds the war. It also gets the same engineering:
-
-- **A customer-data redaction service for the CRM platform** — built on Microsoft Presidio in Python, then **successfully converted to Rust** for performance, with a **self-training recursive loop**: when a user flags a missed redaction, the miss propagates back into the detection layer automatically, so the system learns to redact what its users catch. (The same obsession runs in my public [data-redactor](https://github.com/goobz22/data-redactor) — Presidio-backed, text/image/PDF, reversible encrypted redaction, [live demo](https://data-redactor-ui.vercel.app/).)
-- **The org's production time-off and scheduling platform**, live across three global regions for ~200 engineers. It's Google Apps Script — and it has a purpose-built **emulator of the GAS runtime** (a fake Apps Script VM over SQLite) so the real production source runs 2,500+ backend tests locally in seconds, against code Google normally only executes in its own cloud. **83,919 lines of test code — more test than app.** Every release passes three gates: a 12,795-line static analyzer I wrote (40 rules, zero errors/warnings/info required), the full test suite, and a 39-golden-DOM Playwright pass.
-- **A Manifest V3 Chrome extension** that restores Bugzilla-grade advanced search inside Jira Data Center — generates JQL and translates JQL back to plain English. Zero build step, zero runtime dependencies, ~13K lines of plain JS, a **599-check smoke suite**, machine-enforced requirements coverage (an unmapped requirement fails the build), and its own zero-dependency fake Jira server that models the traps: form-urlencoded-only endpoints, session expiry as a 302-into-HTML-200, HTTP-date `Retry-After`.
+- **Customer-data redaction service** for the CRM platform — built on Microsoft Presidio in Python, then converted to Rust for performance, with a self-training feedback loop: redactions missed in production are reported by users and propagate back into the detection layer automatically, so coverage improves from real usage.
+- **The organization's production time-off and scheduling platform**, live across three global regions for approximately 200 engineers. To make it testable, I built an emulator of the Google Apps Script runtime that executes the real production source locally against SQLite — 2,500+ backend tests run in seconds against code Google normally executes only in its own cloud. The codebase carries **more test code (~84K lines) than application code**, and every release passes three gates: a 12,795-line custom static analyzer (40 rules, zero findings required), the full test suite, and a golden-DOM Playwright pass.
+- **A Manifest V3 Chrome extension** restoring advanced structured search inside Jira Data Center, generating JQL and translating JQL back to plain English. Zero build step, zero runtime dependencies, ~13K lines; a 599-check test suite; machine-enforced requirements coverage in which an unmapped requirement fails the build; and a purpose-built local Jira Data Center emulator that models the platform's real failure modes (form-encoding-only endpoints, session expiry surfaced as a 302-into-HTML-200, HTTP-date `Retry-After`).
 
 ---
 
-## Doctrine: how I build
+## Engineering methodology
 
-Spec, test, and bug driven — enforced by machinery, not by discipline.
+Spec-, test-, and bug-driven, enforced by tooling rather than convention:
 
-- **A bug is a class until a script proves it a one-off.** On confirming any bug, I write the detection script *first* — with a self-test proving it flags the bad shape and stays quiet on the good one, and a printed denominator so "0 findings" can never mean "0 files scanned." Then I fix the entire class at the root, architecturally where possible, and wire the detector into the build gate as a permanent fence. ThothOS runs **468 of these bespoke guards**; nearly every one tests itself before it tests the codebase.
-- **Anti-reward-hacking is written into the loop.** A test must fail before the fix — that's the proof it tests the real thing. Never edit a test to reach green. **The grader is never the writer**: an adversarial agent in a fresh context reviews every diff against the spec.
-- **Every commit and push on my machine is AI-reviewed.** Global git hooks run a headless Claude review over every commit and every push — content-addressed verdict caching, big diffs sub-batched so a timeout can't silently pass the gate, verdicts parsed defensively after a live incident where a review *quoting* "VERDICT: BLOCK" in prose false-blocked a pass. One month of telemetry: 562 reviews, 25 blocks.
-- **"Ready to ship" is a machine-computed number.** ThothOS's readiness scoreboard declares a universe of **58 gates and 524 audit dimensions** — and a declared-but-unmeasured gate materializes as unknown, counted, and score-dragging. It caught its own earlier version printing 83% while four launch-blocking gates were wired to nothing. Skipped tests never count as green. The launch requires every gate green and *held* for 14 consecutive nightly runs.
-- **The instrument gets audited too.** Every dominant product bug class gets re-run against the measuring apparatus itself — gates computing verdicts nothing reads, parsers matching one header, vacuous guards scanning zero files. Detectors for the detectors, wired into the same gate.
+- **Bugs are treated as classes, not instances.** Confirming a bug means first writing a detection script that enumerates the same shape across the codebase — each script carries a self-test proving it flags the defective pattern and stays silent on the compliant one, and prints its scan denominator so zero findings can never mean zero coverage. The class is then fixed at the root, architecturally where possible, and the detector joins the permanent build gate. ThothOS runs **468 such guards**.
+- **Tests must fail first.** A regression test is written against the defect and confirmed red before the fix; tests are never edited to reach green; the reviewer of a change is a fresh context, never its author.
+- **Every commit and push is AI-reviewed.** Machine-wide git hooks run a headless model review over each commit and push, with content-addressed verdict caching and diff sub-batching so large changes cannot silently bypass the gate. One month of telemetry: 562 reviews, 25 blocks.
+- **Release readiness is a computed number, not a judgment.** The ThothOS readiness scoreboard declares **58 gates across a 524-dimension audit universe**; a declared but unmeasured gate is counted as unknown and blocks shipment, skipped tests never count as green, and launch requires every gate green and held for 14 consecutive nightly runs.
+- **The measuring instruments are audited with the same rigor as the product** — verified against planted defects, checked for unreachable verdicts and vacuous scans.
 
-One methodology, five very different stacks: a Next.js platform, a Google Apps Script monolith, a Chrome extension, a Go network monitor, a C++/CUDA engine.
+The same methodology runs across five unrelated stacks: a Next.js platform, a Google Apps Script system, a Chrome extension, a Go network monitor, and a C++/CUDA engine.
 
 ---
 
-## The fleet
+## Agent infrastructure
 
-Most people prompt AI. I built the governance so a fleet of agents can ship unsupervised:
+The volume above is only sustainable because the agents run inside engineered constraints:
 
-- **A hardened harness around Claude Code**: enforcement hooks as hard walls (destructive git operations are blocked outright, with a 63-case bypass test suite proving the walls hold), a three-tier memory architecture (always-on domain model, path-scoped rules, an indexed learnings corpus), and a shared-tree collaboration protocol so multiple agents and I can work one repo simultaneously — auto-save checkpoints, mandatory commits, session-scoped safety nets.
-- **Autonomous loop programs** that run for hours: sweep-and-fix (root-cause every failure, never just re-run), product-truth (drive every persona through the real product and grade whether *value* lands, not whether tests pass), and security audit (threat-model-driven tenant-isolation attacks). Findings land in a committed backlog so nothing evaporates with the context window.
-- **openclaw** — my autonomous engineering orchestrator on the Claude Agent SDK: ~102K lines in three months, **583,026 orchestration events, 86,261 completed goals**, a reward-hack trajectory monitor with 116 real firings, and an untamperable verifier that **overrode 56 of 111 agent-claimed successes**. Agents lie; the verifier doesn't.
-- **[@goobz22/claude-runner](https://www.npmjs.com/package/@goobz22/claude-runner)** (npm) — unattended route-by-route browser testing driven by Claude: self-recovering, resumable, runs overnight.
-
-The telemetry works both directions — it once caught a feedback loop duplicating ~430K tokens per two-hour campaign. You don't run a fleet on vibes.
+- **A hardened harness for Claude Code**: enforcement hooks that hard-block destructive git operations (verified by a 63-case bypass test suite), a three-tier memory architecture, and a shared-tree protocol allowing multiple agents to work one repository concurrently with automatic checkpointing.
+- **Autonomous programs** for long-running work: sweep-and-fix (root-cause every failure), product-truth evaluation (drive each user persona through the real product and grade delivered value, not test results), and security auditing (threat-model-driven tenant-isolation testing) — with durable, committed backlogs so findings survive context loss.
+- **openclaw**, an autonomous engineering orchestrator built on the Claude Agent SDK: ~102K lines, **583,026 orchestration events, 86,261 completed goals**, a reward-hacking monitor with 116 confirmed detections, and an independent verifier that overrode **56 of 111 agent-claimed successes**.
+- **[@goobz22/claude-runner](https://www.npmjs.com/package/@goobz22/claude-runner)** — unattended, resumable route-by-route browser testing.
 
 ---
 
 ## Open source
 
-| Project | What it is |
+| Project | Description |
 |---|---|
-| [Network-Monitor](https://github.com/Technologies-Unlimited/Network-Monitor) | Distributed network monitoring in Go — ~36K lines, gRPC node mesh with heartbeat lifecycle, **10+ Gbps bandwidth testing** over parallel streams, SNMPv3, raw ICMP, **4,424 OIDs across 122 vendor templates**, 14 diagnostic tools. Runs standalone or as a proxy for ThothOS's network workspace. |
-| [goobs-frontend](https://github.com/goobz22/goobs-frontend) | My own React design system on [npm](https://www.npmjs.com/package/goobs-frontend) — 100+ components, 264 icons, CSS-module tokens (no MUI, no Tailwind), a zod-native form engine (no Formik/RHF), IPAM field types, 7 runtime deps. Consumed from npm in ThothOS production. [Live Storybook.](https://storybook.technologiesunlimited.net/) |
-| [cat-annihilation](https://github.com/goobz22/cat-annihilation) | The C++20/Vulkan/CUDA engine above. |
-| [data-redactor](https://github.com/goobz22/data-redactor) | Presidio-backed PII redaction before your data reaches an AI — text, images (OCR), PDF; token/mask/format-preserving strategies; reversible encrypted redaction. [Live demo.](https://data-redactor-ui.vercel.app/) |
-| [next-smart-hmr](https://github.com/Technologies-Unlimited/next-smart-hmr) | Route-aware HMR for Next.js ([npm](https://www.npmjs.com/package/next-smart-hmr)) — dependency-graph-driven, so only affected tabs refresh. Measured on a 2,301-file app: ~25ms full graph build over 7,785 edges, <10ms incremental. Built because my agent fleet edits one tree concurrently while I watch other tabs. |
-| [HomeSchoolApp](https://github.com/Technologies-Unlimited/HomeSchoolApp) | Full event-management platform for homeschool communities (Next 16, React 19, MongoDB) — co-built with my sister. |
+| [Network-Monitor](https://github.com/Technologies-Unlimited/Network-Monitor) | Distributed network monitoring in Go — ~36K lines, gRPC node mesh with heartbeat lifecycle, 10+ Gbps distributed bandwidth testing, SNMPv3, raw ICMP, 4,424 OIDs across 122 vendor templates, 14 diagnostic tools. |
+| [goobs-frontend](https://github.com/goobz22/goobs-frontend) | A complete React design system on [npm](https://www.npmjs.com/package/goobs-frontend) — 100+ components, 264 icons, CSS-module design tokens, a zod-native form engine, seven runtime dependencies. Consumed from npm in ThothOS production. [Storybook.](https://storybook.technologiesunlimited.net/) |
+| [cat-annihilation](https://github.com/goobz22/cat-annihilation) | The C++20/Vulkan/CUDA engine described above. |
+| [data-redactor](https://github.com/goobz22/data-redactor) | Presidio-backed PII redaction for text, images (OCR), and PDF before data reaches an AI system — token, mask, and format-preserving strategies; reversible encrypted redaction. [Live demo.](https://data-redactor-ui.vercel.app/) |
+| [next-smart-hmr](https://github.com/Technologies-Unlimited/next-smart-hmr) | Route-aware HMR for Next.js ([npm](https://www.npmjs.com/package/next-smart-hmr)) — dependency-graph-driven so only affected tabs refresh; measured at ~25ms full graph build over 7,785 edges on a 2,301-file application. |
+| [HomeSchoolApp](https://github.com/Technologies-Unlimited/HomeSchoolApp) | Event-management platform for homeschool communities (Next.js 16, React 19, MongoDB). |
 
-I learn by shipping: **Flake**, a social app for connecting groups around shared interests, exists because I wanted to teach myself Expo. That's the same pattern as the radios, the $50/hour lessons, and everything above it.
+I also learn by building: **Flake**, a social application for connecting groups around shared interests, was the vehicle for learning Expo and React Native.
 
 ---
 
-## The strategy: two mountains
+## On funding
 
-Mount Rushmore was designed to the waist. Borglum's final plaster model shows four presidents with torsos, suits, and hands, an 80×120-foot inscription, and a Hall of Records carved into the canyon behind the heads. Congress funded it — so Congress set the scope. In 1939 it directed that federal money be spent on the faces only. Borglum died in March 1941; that October the money stopped and the funder declared the monument complete, at $989,992.32. The most famous monument in America is an unfinished project whose funder decided the heads were the vision.
+Mount Rushmore was designed to the waist — Borglum's final model included torsos, an inscription, and a Hall of Records. Because Congress funded it, Congress set the scope: in 1939 it directed that federal money be spent on the faces only, and in 1941 the funding ended and the monument was declared complete at $989,992.32. Seventeen miles away, Korczak Ziolkowski twice declined $10 million in federal funding for Crazy Horse; the project is slower, but no outside party can redefine its scope, and the full figure remains the plan.
 
-Seventeen miles away, Korczak Ziolkowski — who had worked under Borglum and watched him fight for every penny — started carving Crazy Horse, and **twice refused $10 million in federal funding**. Admission fees and donations only. It's slower. There's no completion date. But nobody on earth can order it finished at the heads, and the whole 563-foot figure is still the plan, generations later.
+That is the reasoning behind self-funding ThothOS. Outside capital without contractual protection of scope means the funder ultimately decides what "finished" looks like. I will take investment when its terms guarantee the complete vision gets built; until then, roughly $1,000 per month in subscriptions buys full sovereignty over scope — with two advantages neither monument had: the cost of the work falls every quarter as inference prices drop, and completion is not open-ended, because launch is defined by a machine-computed readiness scoreboard that must hold green for 14 consecutive nights.
 
-That is exactly why ThothOS is self-funded. Taking money without a guarantee is putting Congress on your cap table: whoever holds the gold eventually says "faces only," and you ship the heads while the funder calls it the monument. I'd take funding the day the treaty is guaranteed — terms under which the full body gets carved no matter whose patience runs out. Until then, my thousand dollars a month of maxed-out subscriptions is the admissions booth, and it buys me the one thing better-capitalized builders don't have: **nobody can truncate the vision.**
-
-And my mountain has an advantage neither monument had — **the cost of carving falls every quarter.** The full body is already in the plaster model: the AI dials in ThothOS are designed, wired, and waiting on a price curve. Where Rushmore's funding decided the heads were enough, and Crazy Horse trades speed for sovereignty, I keep sovereignty *and* the curve. And unlike a monument with no completion date, mine has a machine-computed definition of finished — a readiness scoreboard that must hold green for 14 consecutive nights before launch.
-
-Verified, not asserted. That's the whole doctrine — the monument, the platform, the engine, all of it.
+Verified, not asserted.
 
 ---
 
 **Matthew Goluba** · Technologies Unlimited · **mkgoluba@outlook.com**
-
