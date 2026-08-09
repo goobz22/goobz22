@@ -52,7 +52,11 @@ The architecture is deliberately built ahead of current AI economics. Model sele
 
 ## cat-annihilation — [github.com/goobz22/cat-annihilation](https://github.com/goobz22/cat-annihilation)
 
-I built a complete wave-survival game in Three.js/React Three Fiber, then undertook converting it to a **from-scratch C++20 / Vulkan / CUDA engine** — no Unity, Unreal, or third-party renderer — to understand the full path from draw call to pixel. The web build serves as the specification: every gameplay constant in the native engine is cited to the exact web source line, and rendered output is pixel-compared against the running web game.
+This project is two complete implementations of the same game, sharing nothing but the design.
+
+The first is a finished browser game built on **Three.js / React Three Fiber** (React 19, Zustand): wave-based enemy AI with projectile and collision systems, procedurally placed terrain with its own collision layer, a day/night cycle, an NPC and story-encounter layer with quest tracking and dialog, elemental spells with an inventory hotbar, character customization with equipment, mobile support with a virtual joystick, and persistent save state — in roughly 10K lines across 45 modules, including defensive details like per-entity error boundaries that recover a crashed enemy without tearing down the running wave.
+
+The second is a **from-scratch C++20 / Vulkan / CUDA engine** — no Unity, Unreal, or third-party renderer — built to run the same game natively and to understand the full path from draw call to pixel. The web build serves as the specification: every gameplay constant in the native engine is cited to the exact web source line, and rendered output is pixel-compared against the running web game.
 
 The engine includes: a render graph with per-resource barrier insertion (topological pass sorting, transient resource lifetimes); clustered deferred PBR with a 16×9×24 compute-assigned light grid; cascaded shadow maps with a Guillotine-packed atlas whose pack density is asserted by unit test; CUDA rigid-body physics (spatial-hash broadphase, GJK/EPA narrow phase) beyond 10,000 bodies; a million-particle CUDA simulation with full stream compaction; a custom ECS on C++20 concepts; a work-stealing job scheduler; SIMD math; custom allocators with zero dynamic allocation in the render loop; and GPU profiling via Vulkan timestamp queries.
 
