@@ -8,9 +8,11 @@ Software engineer and network engineer. I am building **[ThothOS](https://thotho
 
 ## Background
 
-I am an L3 Technical Support Engineer at Broadcom (VMware Cloud Foundation Global Support) — NSX, HCX, Aria Operations, vCenter, ESXi — a member of the P1 critical-outage team and one of two engineers on the organization's technical support coding team. Before Broadcom I was a Network Virtualization Engineer at VMware, and before that I designed and operated ISP and MSP infrastructure: a wireless ISP serving 800+ subscribers over a redundant 11 GHz OSPF backhaul loop, an LTE deployment on 3.65 GHz, FCC license filings, a regional fiber backbone upgrade from 100 Mbps to 1 Gbps, and the on-premise migration of 100+ hosting customers.
+I am an L3 engineer in enterprise network virtualization support (NSX, HCX, Aria Operations, vCenter, ESXi). Before that I was a Network Virtualization Engineer at VMware, and before that I designed and operated ISP and MSP infrastructure: a wireless ISP serving 800+ subscribers over a redundant 11 GHz OSPF backhaul loop, an LTE deployment on 3.65 GHz, FCC license filings, a regional fiber backbone upgrade from 100 Mbps to 1 Gbps, and the on-premise migration of 100+ hosting customers.
 
 I hold a B.S. in Information Technology, but the working skill set is self-taught — Linux, bash, and routing protocols learned during the ISP years because production networks required it. In 2023–24 I took a deliberate career break and hired a professional engineer at $50/hour for one-on-one instruction in software engineering, funded entirely out of my own pocket. Everything below is the result.
+
+Beyond the public portfolio, the production systems I have designed and operated span several categories: high-throughput PII detection and redaction pipelines (built in Python, converted to Rust for performance, with self-training feedback loops in which user-reported misses propagate automatically back into the detection layer); scheduling and approval platforms serving hundreds of users across global regions; runtime emulators that make cloud-only execution environments fully testable locally, enabling thousands of backend tests to run in seconds against production source; and browser extensions with machine-enforced requirements coverage, where an unmapped requirement fails the build.
 
 ---
 
@@ -27,7 +29,7 @@ I operate a fleet of maxed-out AI subscriptions rather than a metered API budget
 
 Every account runs at its daily, weekly, and total limits each cycle. A Max 20x account driven to its limits works out to **$2,000–3,000 per week** in metered-equivalent usage; four of them plus the Max 5x is **$8,500–12,750 per week — $40–50k per month on the conservative end, roughly one trillion tokens over the past six months** — for about $1,000 in subscriptions. The fleet was five Max 20x accounts until recently and scales to five to seven in September, which puts the metered-equivalent ceiling near $90k per month. This is not token maxxing; it is pushing AI to the edge of what is possible without seed funding.
 
-The output is measurable: **10,578 commits to ThothOS in 2026 alone** (15,868 total since 2023) — more code shipped this year than in all prior years combined — across roughly **two million lines of maintained code**: ~1.5M TypeScript, ~215K C++/CUDA, ~200K Google Apps Script (application and tests), ~36K Go.
+The output is measurable: **10,578 commits to ThothOS in 2026 alone** (15,868 total since 2023) — more code shipped this year than in all prior years combined — across roughly **1.8 million lines of maintained code**: ~1.5M TypeScript, ~215K C++/CUDA, ~36K Go.
 
 ---
 
@@ -58,14 +60,6 @@ The engine includes: a render graph with per-resource barrier insertion (topolog
 
 ---
 
-## Work at Broadcom
-
-- **Customer-data redaction service** for the CRM platform — built on Microsoft Presidio in Python, then converted to Rust for performance, with a self-training feedback loop: redactions missed in production are reported by users and propagate back into the detection layer automatically, so coverage improves from real usage.
-- **The organization's production time-off and scheduling platform**, live across three global regions for approximately 200 engineers. To make it testable, I built an emulator of the Google Apps Script runtime that executes the real production source locally against SQLite — 2,500+ backend tests run in seconds against code Google normally executes only in its own cloud. The codebase carries **more test code (~84K lines) than application code**, and every release passes three gates: a 12,795-line custom static analyzer (40 rules, zero findings required), the full test suite, and a golden-DOM Playwright pass.
-- **A Manifest V3 Chrome extension** restoring advanced structured search inside Jira Data Center, generating JQL and translating JQL back to plain English. Zero build step, zero runtime dependencies, ~13K lines; a 599-check test suite; machine-enforced requirements coverage in which an unmapped requirement fails the build; and a purpose-built local Jira Data Center emulator that models the platform's real failure modes (form-encoding-only endpoints, session expiry surfaced as a 302-into-HTML-200, HTTP-date `Retry-After`).
-
----
-
 ## Engineering methodology
 
 Spec-, test-, and bug-driven, enforced by tooling rather than convention:
@@ -76,7 +70,7 @@ Spec-, test-, and bug-driven, enforced by tooling rather than convention:
 - **Release readiness is a computed number, not a judgment.** The ThothOS readiness scoreboard declares **58 gates across a 524-dimension audit universe**; a declared but unmeasured gate is counted as unknown and blocks shipment, skipped tests never count as green, and launch requires every gate green and held for 14 consecutive nightly runs.
 - **The measuring instruments are audited with the same rigor as the product** — verified against planted defects, checked for unreachable verdicts and vacuous scans.
 
-The same methodology runs across five unrelated stacks: a Next.js platform, a Google Apps Script system, a Chrome extension, a Go network monitor, and a C++/CUDA engine.
+The same methodology runs across unrelated stacks: a Next.js platform, browser extensions, a Go network monitor, and a C++/CUDA engine.
 
 ---
 
