@@ -2,7 +2,7 @@
 
 **I'm building a business platform that builds itself — solo, self-funded, on an AI agent fleet I engineered myself. This page is the war plan, and the receipts.**
 
-I'm a network engineer by trade — L3 at Broadcom (VMware VCF), NSX/HCX, permanent seat on the P1 critical-outage team. Everything I know is self-taught. Before AI existed I stayed up all night learning bash, Linux, and routing protocols because a wireless ISP had to work in the morning, and I programmed microwave radios in production. I love RF. I love this field. In 2023 I took a year off and paid an engineer $50/hour out of my own pocket to teach me to write software the same way. This year that bet paid off all my debt. Now I'm ramping.
+I'm a network engineer by trade — L3 at Broadcom (VMware VCF), NSX/HCX, permanent seat on the P1 critical-outage team. Everything I know is self-taught. Before AI existed I stayed up all night learning bash, Linux, and routing protocols because a wireless ISP had to work in the morning, and I programmed microwave radios in production. I love RF. I love this field. In 2023 I took a year off and went into debt paying an engineer $50/hour to teach me to write software the same way. This year, the career that apprenticeship earned me paid off the debt that funded it — the bet closed its own loop. Now I'm ramping.
 
 📫 **mkgoluba@outlook.com**
 
